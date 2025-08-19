@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATELIER — Design & Fashion Agency</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom cursor */
+        body {
+            cursor: none;
+        }
+
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 50px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: padding 0.3s ease;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 8vw, 8rem);
+            font-weight: 100;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        .hero p {
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.7s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards;
+        }
+
+        .cta-button:hover {
+            background: #ffffff;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+        }
+
+        /* Floating elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 20s linear infinite;
+        }
+
+        .floating-element:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { left: 30%; animation-delay: -5s; }
+        .floating-element:nth-child(3) { left: 50%; animation-delay: -10s; }
+        .floating-element:nth-child(4) { left: 70%; animation-delay: -15s; }
+        .floating-element:nth-child(5) { left: 90%; animation-delay: -20s; }
+
+        /* Services Section */
+        .services {
+            padding: 150px 50px;
+            background: #ffffff;
+            color: #0a0a0a;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 100;
+            text-align: center;
+            margin-bottom: 100px;
+            letter-spacing: -1px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-item {
+            text-align: center;
+            padding: 40px 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-number {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .service-description {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #666;
+            font-weight: 300;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 150px 50px;
+            background: #f5f5f5;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            aspect-ratio: 1;
+            background: linear-gradient(45deg, #ddd, #bbb);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.02);
+            z-index: 2;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-text {
+            text-align: center;
+        }
+
+        .portfolio-text h3 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .portfolio-text p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* About Section */
+        .about {
+            padding: 150px 50px;
+            background: #0a0a0a;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 60px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 100;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #999;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 150px 50px;
+            background: #ffffff;
+            color: #0a0a0a;
+            text-align: center;
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-email {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #0a0a0a;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-email:hover {
+            opacity: 0.6;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 50px;
+            background: #0a0a0a;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 20px 25px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .services, .portfolio, .about, .contact {
+                padding: 100px 25px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+
+    <nav class="navbar">
+        <div class="logo">ATELIER</div>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+        <div class="hero-content">
+            <h1>REDEFINING FASHION</h1>
+            <p>Where creativity meets craftsmanship</p>
+            <a href="#contact" class="cta-button">START A PROJECT</a>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <h2 class="section-title">Our Expertise</h2>
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="service-number">01</div>
+                <h3 class="service-title">Brand Identity</h3>
+                <p class="service-description">Crafting distinctive visual identities that resonate with your audience and elevate your fashion brand to new heights.</p>
+            </div>
+            <div class="service-item">
+                <div class="service-number">02</div>
+                <h3 class="service-title">Fashion Design</h3>
+                <p class="service-description">From concept to runway, we create innovative designs that push boundaries and set new trends in the fashion industry.</p>
+            </div>
+            <div class="service-item">
+                <div class="service-number">03</div>
+                <h3 class="service-title">Creative Direction</h3>
+                <p class="service-description">Guiding your brand's visual narrative through strategic creative direction and compelling storytelling.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio" id="portfolio">
+        <h2 class="section-title">Selected Work</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-text">
+                        <h3>LUXE COLLECTION</h3>
+                        <p>Brand Identity & Design</p>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-text">
+                        <h3>MINIMAL FASHION</h3>
+                        <p>Creative Direction</p>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-text">
+                        <h3>AVANT-GARDE</h3>
+                        <p>Fashion Design</p>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-text">
+                        <h3>STUDIO IDENTITY</h3>
+                        <p>Brand Development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <h2 class="section-title">About Atelier</h2>
+        <div class="about-content">
+            <p class="about-text">We are a collective of designers, creatives, and fashion visionaries dedicated to pushing the boundaries of style and innovation. Our approach combines timeless aesthetics with contemporary edge, creating brands and designs that stand the test of time.</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Clients</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Years</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Awards</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2 class="section-title">Let's Create Together</h2>
+        <div class="contact-info">
+            <a href="mailto:hello@atelier.com" class="contact-email">hello@atelier.com</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo">ATELIER</div>
+            <ul class="footer-links">
+                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#terms">Terms</a></li>
+                <li><a href="#careers">Careers</a></li>
+                <li><a href="#instagram">Instagram</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+                navbar.style.padding = '20px 50px';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+                navbar.style.padding = '30px 50px';
+            }
+        });
+
+        // Hover effects for interactive elements
+        document.querySelectorAll('a, .service-item, .portfolio-item').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
