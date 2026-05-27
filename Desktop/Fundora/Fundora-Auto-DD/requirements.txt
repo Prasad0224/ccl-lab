@@ -1,0 +1,37 @@
+# =============================================================================
+# Fundora Auto DD Engine — Dependencies
+# =============================================================================
+# Install: pip install -r requirements.txt
+# Python:  >= 3.10
+# =============================================================================
+
+# --- API Framework & Server ---
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# --- Data Processing ---
+pandas>=2.1.0
+openpyxl>=3.1.0           # Excel (.xlsx) read/write support for pandas
+
+# --- PDF Parsing ---
+pdfplumber>=0.10.0         # Primary: text + table extraction from PDFs
+PyMuPDF>=1.23.0            # Fallback: robust PDF text extraction via fitz
+
+# --- AI / LLM Providers ---
+google-generativeai>=0.3.0 # Gemini API (Layer 2 preferred)
+openai>=1.6.0              # OpenAI API (Layer 4/5 preferred)
+
+# --- Schema Validation & Config ---
+pydantic>=2.5.0
+pydantic-settings>=2.1.0   # BaseSettings for .env loading
+python-dotenv>=1.0.0        # .env file support
+
+# --- Utilities ---
+aiofiles>=23.2.0           # Async file I/O for uploads
+tenacity>=8.2.0            # Retry logic with exponential backoff
+
+# --- Testing (dev only) ---
+pytest>=7.4.0
+httpx>=0.25.0              # Async test client for FastAPI
+reportlab>=4.0.0           # Generate synthetic PDF test fixtures
